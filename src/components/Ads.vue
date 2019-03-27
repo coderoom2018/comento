@@ -3,7 +3,6 @@
     <h1>Ads</h1>
     <div class="myAds_container" v-for="ad in ads" v-bind:key="ad.no">
       <div class="myAds_imageContainer">
-        img: {{ ad.img }}
         <img v-bind:src=ad.img >
       </div>
       <div class="myAds_contents">
