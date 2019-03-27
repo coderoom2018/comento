@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Posts />
+    <Posts v-bind:posts='posts' v-bind:categories='categories' />
     <Ads />
   </div>
 </template>
@@ -18,41 +18,46 @@ export default {
   },
   data: function() {
     return {
-      categories: [],
       posts: [],
+      categories: [],
     }
   },
   mounted: function() {
-    this.getCategories()
     this.getPosts()
   },
-
   methods: {
-    getCategories: function() {
-      const URI = 'http://comento.cafe24.com/category.php'
+    getPosts: function() {
+      const categoriesURI = 'http://comento.cafe24.com/category.php'
 
-      this.$http.get(URI)
-      // this.$http.get('http://comento.cafe24.com/category.php')
+      this.$http.get(categoriesURI)
       .then(result => {
         console.log('category list: ', result.data)
-        const data = result.data
-        this.categories = data.list
+        this.categories = result.data.list
+      })
+      .then(() => {
+        const postsURI = 'http://comento.cafe24.com/request.php'
+        const postsPage = '1'
+  
+        this.$http.get(`${postsURI}?page=${postsPage}`)
+        .then(result => {
+          console.log("Posts: ", result.data.list)
+
+          let list = result.data.list
+  
+          list.map(post => {
+            for (var i = 0; i < this.$data.categories.length; i++) {
+              if (post.category_no === this.$data.categories[i].no) {
+                post.category_no = this.$data.categories[i].name
+              }
+            }  
+          })
+          this.posts = list
+        })
       })
       .catch(error => {
         console.log(error)
       })
     },
-
-    getPosts: function() {
-      const URI = 'http://comento.cafe24.com/request.php'
-      const page = '1'
-
-      this.$http.get(`${URI}?page=${page}`)
-      .then(result => {
-        console.log(result.data)
-        this.posts = result.data
-      })
-    }
   },
 }
 </script>
