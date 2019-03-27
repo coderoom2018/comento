@@ -2,7 +2,10 @@
   <div class="myAds">
     <h1>Ads</h1>
     <div class="myAds_container" v-for="ad in ads" v-bind:key="ad.no">
-      <div class="myAds_imageContainer">img: {{ ad.img }}</div>
+      <div class="myAds_imageContainer">
+        img: {{ ad.img }}
+        <img v-bind:src=ad.img >
+      </div>
       <div class="myAds_contents">
         <div>title: {{ ad.title }}</div>
         <div>contents: {{ ad.contents }}</div>
@@ -34,7 +37,11 @@ export default {
         .get(`${URI}?page=${page}&limit=${limit}`)
         .then(result => {
           console.log("Ads: ", result.data.list);
-          this.ads = result.data.list;
+          let list = result.data.list
+          list.map(ad => {
+            ad.img = `http://comento.cafe24.com/public/images/${ad.img}`
+          })
+          this.ads = list;
         })
         .catch(error => {
           console.log(error);
