@@ -3,14 +3,10 @@
     <h1>Ads</h1>
     <div class="myAds_container" v-for="ad in ads" v-bind:key="ad.no">
       <div class="myAd">
-        <!-- <div class="myAd_imageContainer"> -->
-          <img class="myAd_image" v-bind:src=ad.img >
-        <!-- </div> -->
-        <div class="myAd_contents">
-          <div>title: {{ ad.title }}</div>
-          <div>contents: {{ ad.contents }}</div>
-          <!-- created_at: {{ ad.created_at }} <br> -->
-          <!-- updated_at: {{ ad.updated_at }}<br> -->
+        <img class="myAd_image" v-bind:src=ad.img >
+        <div class="myAd_main">
+          <div class="myAd_main_title">{{ ad.title }}</div>
+          <div class="myAd_main_contents">{{ ad.contents }}</div>
         </div>
       </div>
     </div>
@@ -22,11 +18,12 @@ export default {
   name: "Ads",
   data: function() {
     return {
-      ads: []
+      ads: this.ads,
     };
   },
+  props: ['ads'],
   mounted: function() {
-    this.getAds();
+    // this.getAds();
   },
   methods: {
     getAds: function() {
@@ -63,7 +60,10 @@ export default {
   }
   .myAd {
     display: flex;
+    flex-direction: row;
     width: 100%;
+    box-shadow: 0px 0px 0px 0.1px black;
+    padding: 10px;
   }
   .myAd_imageContainer {
     width: 400px;
@@ -72,9 +72,25 @@ export default {
   .myAd_image {
     width: 40%;
     height: 40%;
-    padding-right: 20px;
     margin-top: auto;
     margin-bottom: auto;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .myAd_main {
+    padding: 10px;
+  }
+  .myAd_main_title {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  @media (max-width: 480px) {
+    .myAd {
+      flex-direction: column;
+    }
+    .myAd_image {
+      width: 100%;
+    }
   }
 
 </style>
