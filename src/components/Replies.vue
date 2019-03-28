@@ -1,18 +1,19 @@
 <template>
   <div class="myReplies_container">
+    <h2>Replies</h2>
     <div v-if="replies.length > 0">
       <div class="myReplies" v-for="reply in replies" v-bind:key="reply.index">
-        <div class="myHead_contents">
-          email: {{ reply.email }}<br>
-          updated_at: {{ reply.updated_at }} <br>
+        <div class="myReplies_head">
+          <div>{{ reply.email }}</div>
+          <div>{{ reply.updated_at }}</div>
         </div>
-        <div class="myMain_contents">
-          contents: {{ reply.contents }}<br>
+        <div class="myReplies_contents">
+          {{ reply.contents }}
         </div>
       </div>
     </div>
-    
-    <div v-else>남겨진 댓글이 없습니다.</div>
+
+    <div v-else class="noneReplies">남겨진 댓글이 없습니다.</div>
   </div>
 </template>
 
@@ -31,5 +32,18 @@ export default {
 </script>
 
 <style scoped>
+  .myReplies {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 30px;
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .myReplies_head {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+  }
 </style>
 
