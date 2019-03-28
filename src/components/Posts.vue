@@ -38,7 +38,7 @@
             {{ post.title }}
           </div>
           <div class="myPost_contents">
-            {{ post.contents }}
+            {{ post.shortenContents }} ...
           </div>
         </div>
       </div>
@@ -126,11 +126,14 @@ export default {
     flex-direction: row;
   }
   .myPosts_container {
-    padding-bottom: 100px;
+    padding-bottom: 50px;
   }
   .myPost {
     display: flex;
     flex-direction: column;
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
   }
   .myPost_mainHead {
     display: flex;

@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <Posts v-bind:posts='posts' v-bind:memoriedPosts='posts' v-bind:categories='categories' />
+    <Posts 
+      v-bind:posts='posts' 
+      v-bind:memoriedPosts='posts' 
+      v-bind:categories='categories' />
     <Ads />
   </div>
 </template>
@@ -48,6 +51,7 @@ export default {
             for (var i = 0; i < this.$data.categories.length; i++) {
               if (post.category_no === this.$data.categories[i].no) {
                 post.category_no = this.$data.categories[i].name
+                post.shortenContents = post.contents.slice(0, 150)
               }
             }  
           })
