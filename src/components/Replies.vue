@@ -35,15 +35,36 @@ export default {
   .myReplies {
     display: flex;
     flex-direction: column;
-    padding-bottom: 30px;
+    margin-bottom: 30px;
     width: 80%;
     margin-right: auto;
     margin-left: auto;
+    box-shadow: 0px 0px 0px 0.1px black;
   }
   .myReplies_head {
     display: flex;
     justify-content: space-between;
     font-weight: 600;
+    box-shadow: 0px 0px 0px 0.1px black;
+    padding: 10px;
+  }
+  .myReplies_contents {
+    padding: 10px;
+  }
+  .noneReplies {
+    height: 200px;
+  }
+  @media (max-width: 480px) {
+    .myReplies {
+      width: 95%;
+      margin-bottom: 20px;
+    }
+    .myReplies_head {
+      padding: 5px;
+    }
+    .myReplies_contents {
+      padding: 5px;
+    }
   }
 </style>
 
