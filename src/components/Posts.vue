@@ -8,20 +8,19 @@
 
     <div v-else class="myPosts">
       <h1>Posts</h1>
-      
-      <div 
-        class="myFilter" 
-        v-for="category in categories" 
-        v-bind:key="category.no"
-        v-on:click="clickCategory(category.name)">
-        <div>
-          <button>{{ category.name }}</button>
+      <div class="myFilter_container">
+        <div 
+          class="myFilter" 
+          v-for="category in categories" 
+          v-bind:key="category.no"
+          v-on:click="clickCategory(category.name)">
+            <div class="categoryBtn">{{ category.name }}</div>
         </div>
       </div>
 
-      <div>
-        <button v-on:click="clickAscendingBtn">오름차순</button>
-        <button v-on:click="clickDescendingBtn">내림차순</button>
+      <div class="orderingBtn_container">
+        <div class="orderingBtn" v-on:click="clickAscendingBtn">오름차순</div>
+        <div class="orderingBtn" v-on:click="clickDescendingBtn">내림차순</div>
       </div>
 
       <div class="myPosts_container" v-for="post in posts" v-bind:key="post.no">
@@ -34,11 +33,13 @@
             {{ post.email }} |
             {{ post.updated_at }}
           </div>
-          <div class="myPost_title">
-            {{ post.title }}
-          </div>
-          <div class="myPost_contents">
-            {{ post.shortenContents }} ...
+          <div class="myPost_content">
+            <div class="myPost_title">
+              {{ post.title }}
+            </div>
+            <div class="myPost_contents">
+              {{ post.shortenContents }} ...
+            </div>
           </div>
         </div>
       </div>
@@ -61,7 +62,6 @@ export default {
       selectedPost_no: "",
       article: {},
       replies: [],
-      selectedCategory: "all",
       reverse: false,
       categoryClicked: false,
     }
@@ -81,7 +81,6 @@ export default {
 
       this.$http.get(`${URI}?req_no=${req_no}`)
       .then(result => {
-        console.log("selectedPost: ", result.data.detail)
         this.article = result.data.detail.article
         this.replies = result.data.detail.replies
       })
@@ -90,11 +89,9 @@ export default {
       });
     },
     clickCategory: function(categoryName) {
-      console.log('memoriedPosts: ', this.memoriedPosts)
       this.posts = this.memoriedPosts.slice().filter(function(post) {
         return post.category_no === categoryName
       })
-      console.log("newPosts: ", this.posts)
     },
     clickAscendingBtn: function() {
       if (!this.reverse) {
@@ -115,15 +112,23 @@ export default {
       }
     }
   },
-  computed: {
-  }
 }
 </script>
 
 <style scoped>
-  .myFilter {
+  .myFilter_container {
     display: flex;
-    flex-direction: row;
+  }
+  .categoryBtn {
+    font-size: 15px;
+    background-color: white;
+    box-shadow: 0px 0px 0px 0.1px black;
+    height: 25px;
+    width: 100px;
+    margin-left: 15px;
+  }
+  .categoryBtn:hover {
+    cursor: pointer;
   }
   .myPosts_container {
     padding-bottom: 50px;
@@ -134,21 +139,50 @@ export default {
     width: 80%;
     margin-right: auto;
     margin-left: auto;
+    box-shadow: 0px 0px 0px 0.1px black;
   }
   .myPost_mainHead {
     display: flex;
     justify-content: space-between;
     font-weight: 500;
+    box-shadow: 0px 0px 0px 0.1px black;
+    padding: 10px;
   }
   .myPost_subHead {
     display: flex;
     font-weight: 500;
+    padding: 10px 0 0 10px;
+  }
+  .myPost_content {
+    padding: 10px;
+  }
+  .myPost_content:hover {
+    cursor: pointer;
   }
   .myPost_title {
     font-size: 25px;
     font-weight: 600;
   }
-  .myPost_contents {
+  .orderingBtn_container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+  }
+  .orderingBtn {
+    font-size: 15px;
+    background-color: white;
+    box-shadow: 0px 0px 0px 0.1px black;
+    height: 25px;
+    width: 100px;
+    margin-left: 15px;
+  }
+  .orderingBtn:hover {
+    cursor: pointer;
+  }
+  @media (max-width: 480px) {
+    .myPost {
+      width: 95%;
+    }
   }
 
 </style>
