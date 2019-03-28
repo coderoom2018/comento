@@ -32,20 +32,39 @@ export default {
   .article {
     display: flex;
     flex-direction: column;
-    padding-bottom: 50px;
     width: 80%;
+    margin-bottom: 50px;
     margin-right: auto;
     margin-left: auto;
+    box-shadow: 0px 0px 0px 0.1px black;
   }
   .article_title {
     font-size: 20px;
     font-weight: 600;
-    padding-bottom: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-shadow: 0px 0px 0px 0.1px black;
   }
   .article_subTitle {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 10px;
+    padding: 10px;
+  }
+  .article_contents {
+    padding: 10px;
+  }
+  @media (max-width: 480px) {
+    .article {
+      width: 95%;
+      margin-bottom: 20px;
+    }
+    .article_title {
+      margin-bottom: 5px;
+      padding: 5px;
+    }
+    .article_subTitle {
+      padding: 5px;
+    }
   }
 </style>
 
