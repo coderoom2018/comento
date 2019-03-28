@@ -2,14 +2,16 @@
   <div class="myAds">
     <h1>Ads</h1>
     <div class="myAds_container" v-for="ad in ads" v-bind:key="ad.no">
-      <div class="myAds_imageContainer">
-        <img v-bind:src=ad.img >
-      </div>
-      <div class="myAds_contents">
-        <div>title: {{ ad.title }}</div>
-        <div>contents: {{ ad.contents }}</div>
-        <!-- created_at: {{ ad.created_at }} <br> -->
-        <!-- updated_at: {{ ad.updated_at }}<br> -->
+      <div class="myAd">
+        <!-- <div class="myAd_imageContainer"> -->
+          <img class="myAd_image" v-bind:src=ad.img >
+        <!-- </div> -->
+        <div class="myAd_contents">
+          <div>title: {{ ad.title }}</div>
+          <div>contents: {{ ad.contents }}</div>
+          <!-- created_at: {{ ad.created_at }} <br> -->
+          <!-- updated_at: {{ ad.updated_at }}<br> -->
+        </div>
       </div>
     </div>
   </div>
@@ -51,5 +53,29 @@ export default {
 </script>
 
 <style scoped>
+  .myAds_container {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 50px;
+    width: 90%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .myAd {
+    display: flex;
+    width: 100%;
+  }
+  .myAd_imageContainer {
+    width: 400px;
+    height: 400px;
+  }
+  .myAd_image {
+    width: 40%;
+    height: 40%;
+    padding-right: 20px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
 </style>
 
