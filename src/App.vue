@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Posts v-bind:posts='posts' v-bind:categories='categories' />
+    <Posts v-bind:posts='posts' v-bind:memoriedPosts='posts' v-bind:categories='categories' />
     <Ads />
   </div>
 </template>

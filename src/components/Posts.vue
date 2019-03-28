@@ -6,7 +6,7 @@
       v-bind:replies="replies">
     </Post>
 
-    <div v-else class="myPosts" display="none">
+    <div v-else class="myPosts">
       <h1>Posts</h1>
       
       <div 
@@ -14,27 +14,31 @@
         v-for="category in categories" 
         v-bind:key="category.no"
         v-on:click="clickCategory(category.name)">
-        <button>{{ category.name }}</button>
+        <div>
+          <button>{{ category.name }}</button>
+        </div>
+      </div>
+
+      <div>
+        <button v-on:click="clickAscendingBtn">오름차순</button>
+        <button v-on:click="clickDescendingBtn">내림차순</button>
       </div>
 
       <div class="myPosts_container" v-for="post in posts" v-bind:key="post.no">
-        <div 
-          class="myPost" 
-          v-on:click="clickPost(post.no)"
-          v-if="!hidden">
+        <div class="myPost" v-on:click="clickPost(post.no)">
           <div class="myPost_mainHead">
-            <div>category_no: {{ post.category_no }}</div>
+            <div>{{ post.category_no }}</div>
             <div>no: {{ post.no }}</div>
           </div>
           <div class="myPost_subHead">
-            email: {{ post.email }} |
-            updated_at: {{ post.updated_at }}
+            {{ post.email }} |
+            {{ post.updated_at }}
           </div>
           <div class="myPost_title">
-            <h3>title: {{ post.title }}</h3>
+            {{ post.title }}
           </div>
           <div class="myPost_contents">
-            content: {{ post.contents }}
+            {{ post.contents }}
           </div>
         </div>
       </div>
@@ -51,18 +55,22 @@ export default {
   data: function() {
     return {
       posts: this.posts,
+      memoriedPosts: this.memoriedPosts,
+      classifiedPosts: [],
       categories: this.categories,
       selectedPost_no: "",
       article: {},
       replies: [],
       selectedCategory: "all",
+      reverse: false,
+      categoryClicked: false,
     }
   },
   components: {
     Post, Modal
   },
   props: [
-    'posts', 'categories'
+    'posts', 'categories', 'memoriedPosts'
   ],
   methods: {
     clickPost: function(selectedPost_no) {
@@ -82,17 +90,30 @@ export default {
       });
     },
     clickCategory: function(categoryName) {
-      console.log(categoryName)
-      // let posts = this.posts
-      
-      // posts.filter(post => {
-      //   post.category_no === categoryName
-      // }) 
-
-      // this.posts = posts
-
-      // console.log(this.posts)
+      console.log('memoriedPosts: ', this.memoriedPosts)
+      this.posts = this.memoriedPosts.slice().filter(function(post) {
+        return post.category_no === categoryName
+      })
+      console.log("newPosts: ", this.posts)
     },
+    clickAscendingBtn: function() {
+      if (!this.reverse) {
+        this.posts = this.posts.slice().reverse()
+        this.reverse = true;
+      }
+    },
+    clickAscendingBtn: function() {
+      if (!this.reverse) {
+        this.posts = this.posts.slice().reverse()
+        this.reverse = true;
+      }
+    },
+    clickDescendingBtn: function() {
+      if (this.reverse) {
+        this.posts = this.posts.slice().reverse()
+        this.reverse = false;
+      }
+    }
   },
   computed: {
   }
@@ -100,6 +121,32 @@ export default {
 </script>
 
 <style scoped>
+  .myFilter {
+    display: flex;
+    flex-direction: row;
+  }
+  .myPosts_container {
+    padding-bottom: 100px;
+  }
+  .myPost {
+    display: flex;
+    flex-direction: column;
+  }
+  .myPost_mainHead {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+  }
+  .myPost_subHead {
+    display: flex;
+    font-weight: 500;
+  }
+  .myPost_title {
+    font-size: 25px;
+    font-weight: 600;
+  }
+  .myPost_contents {
+  }
 
 </style>
 
